@@ -3,181 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>像素豆匣 · 增长看板</title>
-<meta name="description" content="像素豆匣每日推广任务、数据记录和增长复盘看板">
+<title>像素豆匣 · 增长作战台</title>
+<meta name="description" content="像素豆匣推广每日任务、地区日报、订阅数据、内容复盘和 Codex 简报">
 <style>
-  :root {
-    --bg: #F6EFE1;
-    --paper: #FFFFFF;
-    --ink: #26261F;
-    --muted: #8A7F6E;
-    --line: #E8DCC8;
-    --mint: #62C9C4;
-    --mint-dark: #287E7A;
-    --pink: #E8A0C6;
-    --pink-soft: #FDEAF1;
-    --yellow: #FFF3D6;
-    --blue: #DCE9FB;
-    --red: #C05555;
-    --shadow: 5px 5px 0 #26261F;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    line-height: 1.55;
-  }
-  button, input, select, textarea { font: inherit; }
-  button { cursor: pointer; }
-  .page { max-width: 1180px; margin: 0 auto; padding: 28px 18px 70px; }
-  .hero {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 24px;
-  }
-  .eyebrow {
-    margin: 0 0 6px;
-    color: var(--mint-dark);
-    font: 700 12px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-  }
-  h1 { margin: 0; font-size: clamp(27px, 5vw, 46px); line-height: 1.1; }
-  .hero p { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
-  .goal {
-    min-width: 220px;
-    padding: 16px 18px;
-    background: var(--paper);
-    border: 3px solid var(--ink);
-    border-radius: 14px;
-    box-shadow: var(--shadow);
-  }
-  .goal small { color: var(--muted); }
-  .goal strong { display: block; font-size: 28px; line-height: 1.15; }
-  .goal .bar { margin-top: 10px; }
-  .panel {
-    background: var(--paper);
-    border: 3px solid var(--ink);
-    border-radius: 16px;
-    padding: 22px;
-    margin-top: 22px;
-    box-shadow: 4px 4px 0 var(--pink);
-  }
-  .panel h2 { margin: 0 0 6px; font-size: 21px; }
-  .panel .sub { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
-  .toolbar, .form-grid, .metrics {
-    display: grid;
-    gap: 12px;
-  }
-  .toolbar {
-    grid-template-columns: repeat(6, minmax(0, auto));
-    align-items: end;
-    margin-bottom: 18px;
-  }
-  .toolbar .grow { min-width: 170px; }
-  label { display: grid; gap: 5px; color: var(--muted); font-size: 12px; font-weight: 700; }
-  input, select, textarea {
-    width: 100%;
-    border: 2px solid var(--line);
-    border-radius: 10px;
-    padding: 10px 11px;
-    background: #fffdf8;
-    color: var(--ink);
-    outline: none;
-  }
-  input:focus, select:focus, textarea:focus { border-color: var(--mint); box-shadow: 0 0 0 3px rgba(98,201,196,.18); }
-  textarea { min-height: 84px; resize: vertical; }
-  .btn {
-    border: 2px solid var(--ink);
-    border-radius: 10px;
-    padding: 10px 14px;
-    background: var(--mint);
-    color: #102E2C;
-    font-weight: 800;
-    box-shadow: 3px 3px 0 var(--ink);
-    transition: transform .12s ease, box-shadow .12s ease;
-  }
-  .btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
-  .btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
-  .btn.secondary { background: var(--paper); }
-  .btn.pink { background: var(--pink); }
-  .btn.red { background: #F7D7D7; color: #722D2D; }
-  .task-list { display: grid; gap: 10px; }
-  .task {
-    display: grid;
-    grid-template-columns: 34px minmax(0,1fr) auto;
-    align-items: center;
-    gap: 12px;
-    padding: 13px;
-    border: 2px solid var(--line);
-    border-radius: 12px;
-    background: #fffdf8;
-  }
-  .task.done { border-color: var(--mint); background: #EAF8F7; }
-  .task input { width: 22px; height: 22px; accent-color: var(--mint-dark); }
-  .task strong { display: block; font-size: 15px; }
-  .task small { display: block; color: var(--muted); margin-top: 2px; }
-  .task .count { color: var(--mint-dark); font: 800 12px ui-monospace, Consolas, monospace; }
-  .bar { height: 10px; overflow: hidden; border-radius: 999px; background: var(--line); }
-  .bar > div { height: 100%; width: 0; background: var(--mint); transition: width .25s ease; }
-  .metrics { grid-template-columns: repeat(5, minmax(0,1fr)); margin-top: 18px; }
-  .metric { padding: 14px; border: 2px solid var(--line); border-radius: 12px; background: #fffdf8; }
-  .metric span { display: block; color: var(--muted); font-size: 12px; }
-  .metric strong { display: block; margin-top: 4px; font-size: 22px; }
-  .form-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
-  .form-grid .wide { grid-column: span 2; }
-  .form-grid .full { grid-column: 1 / -1; }
-  .form-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 10px; }
-  .table-wrap { overflow-x: auto; margin-top: 18px; }
-  table { width: 100%; border-collapse: collapse; min-width: 900px; }
-  th, td { border-bottom: 1px solid var(--line); padding: 10px 8px; text-align: left; vertical-align: top; font-size: 13px; }
-  th { color: var(--muted); font-size: 12px; }
-  tr:hover td { background: #fffaf0; }
-  .empty { padding: 18px; border: 2px dashed var(--line); border-radius: 12px; color: var(--muted); }
-  .shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 12px; margin-top: 16px; }
-  .shot { position: relative; border: 2px solid var(--line); border-radius: 12px; overflow: hidden; background: #fffdf8; }
-  .shot img { display: block; width: 100%; height: 150px; object-fit: cover; cursor: zoom-in; }
-  .shot .meta { padding: 8px 10px; font-size: 12px; color: var(--muted); }
-  .shot .remove { position: absolute; top: 7px; right: 7px; border: 0; border-radius: 999px; background: rgba(38,38,31,.82); color: #fff; padding: 4px 8px; }
-  .insights { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
-  .insight { padding: 15px; border-radius: 12px; border: 2px solid var(--line); background: var(--yellow); }
-  .insight strong { display: block; margin-bottom: 5px; }
-  .insight p { margin: 0; font-size: 13px; color: #5D5548; }
-  .note {
-    margin-top: 16px;
-    padding: 14px 16px;
-    border: 2px solid #B7DFDC;
-    border-radius: 12px;
-    background: #EEF7F6;
-    font-size: 13px;
-    color: #365A57;
-  }
-  .footer { margin-top: 30px; color: var(--muted); text-align: center; font-size: 12px; }
-  dialog { border: 0; padding: 0; background: transparent; max-width: 92vw; }
-  dialog img { display: block; max-width: 90vw; max-height: 85vh; border: 3px solid var(--ink); border-radius: 12px; background: #fff; }
-  @media (max-width: 860px) {
-    .hero { display: grid; align-items: start; }
-    .goal { min-width: 0; }
-    .toolbar { grid-template-columns: repeat(2,minmax(0,1fr)); }
-    .toolbar .grow { grid-column: span 2; }
-    .metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
-    .form-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-    .insights { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 520px) {
-    .page { padding: 18px 10px 50px; }
-    .panel { padding: 16px; border-width: 2px; box-shadow: 3px 3px 0 var(--pink); }
-    .toolbar, .form-grid { grid-template-columns: 1fr; }
-    .toolbar .grow, .form-grid .wide { grid-column: auto; }
-    .metrics { grid-template-columns: 1fr 1fr; }
-    .task { grid-template-columns: 30px minmax(0,1fr); }
-    .task .count { grid-column: 2; }
-  }
+  :root { --bg:#F6EFE1; --paper:#FFF; --ink:#26261F; --muted:#8A7F6E; --line:#E8DCC8; --mint:#62C9C4; --mint-dark:#287E7A; --pink:#E8A0C6; --pink-soft:#FDEAF1; --yellow:#FFF3D6; --red:#C05555; --shadow:5px 5px 0 #26261F; }
+  * { box-sizing:border-box; } html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; line-height:1.55; }
+  button,input,select,textarea { font:inherit; } button { cursor:pointer; }
+  .page { max-width:1220px; margin:0 auto; padding:28px 18px 70px; }
+  .hero { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:24px; }
+  .eyebrow { margin:0 0 6px; color:var(--mint-dark); font:700 12px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.12em; text-transform:uppercase; }
+  h1 { margin:0; font-size:clamp(27px,5vw,46px); line-height:1.1; } .hero p { margin:10px 0 0; color:var(--muted); font-size:15px; }
+  .goal { min-width:250px; padding:16px 18px; background:var(--paper); border:3px solid var(--ink); border-radius:14px; box-shadow:var(--shadow); }
+  .goal small { color:var(--muted); } .goal strong { display:block; font-size:28px; line-height:1.15; }
+  .panel { background:var(--paper); border:3px solid var(--ink); border-radius:16px; padding:22px; margin-top:22px; box-shadow:4px 4px 0 var(--pink); }
+  .panel h2 { margin:0 0 6px; font-size:21px; } .panel .sub { margin:0 0 18px; color:var(--muted); font-size:14px; }
+  .toolbar,.form-grid,.metrics,.region-grid,.snapshot-grid { display:grid; gap:12px; }
+  .toolbar { grid-template-columns:repeat(7,minmax(0,auto)); align-items:end; margin-bottom:18px; }
+  .toolbar .grow { min-width:170px; } label { display:grid; gap:5px; color:var(--muted); font-size:12px; font-weight:700; }
+  input,select,textarea { width:100%; border:2px solid var(--line); border-radius:10px; padding:10px 11px; background:#fffdf8; color:var(--ink); outline:none; }
+  input:focus,select:focus,textarea:focus { border-color:var(--mint); box-shadow:0 0 0 3px rgba(98,201,196,.18); }
+  textarea { min-height:84px; resize:vertical; }
+  .btn { border:2px solid var(--ink); border-radius:10px; padding:10px 14px; background:var(--mint); color:#102E2C; font-weight:800; box-shadow:3px 3px 0 var(--ink); transition:transform .12s,box-shadow .12s; }
+  .btn:hover { transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink); } .btn:active { transform:translate(2px,2px); box-shadow:1px 1px 0 var(--ink); }
+  .btn.secondary { background:var(--paper); } .btn.pink { background:var(--pink); } .btn.red { background:#F7D7D7; color:#722D2D; }
+  .task-list { display:grid; gap:10px; } .task { display:grid; grid-template-columns:34px minmax(0,1fr) auto; align-items:center; gap:12px; padding:13px; border:2px solid var(--line); border-radius:12px; background:#fffdf8; }
+  .task.done { border-color:var(--mint); background:#EAF8F7; } .task input { width:22px; height:22px; accent-color:var(--mint-dark); }
+  .task strong { display:block; font-size:15px; } .task small { display:block; color:var(--muted); margin-top:2px; } .task .count { color:var(--mint-dark); font:800 12px ui-monospace,Consolas,monospace; }
+  .bar { height:10px; overflow:hidden; border-radius:999px; background:var(--line); } .bar > div { height:100%; width:0; background:var(--mint); transition:width .25s; }
+  .metrics { grid-template-columns:repeat(6,minmax(0,1fr)); margin-top:18px; } .metric { padding:14px; border:2px solid var(--line); border-radius:12px; background:#fffdf8; }
+  .metric span { display:block; color:var(--muted); font-size:12px; } .metric strong { display:block; margin-top:4px; font-size:22px; }
+  .form-grid { grid-template-columns:repeat(5,minmax(0,1fr)); } .form-grid .wide { grid-column:span 2; } .form-grid .full { grid-column:1/-1; }
+  .form-actions { grid-column:1/-1; display:flex; flex-wrap:wrap; gap:10px; }
+  .table-wrap { overflow-x:auto; margin-top:18px; } table { width:100%; border-collapse:collapse; min-width:950px; }
+  th,td { border-bottom:1px solid var(--line); padding:10px 8px; text-align:left; vertical-align:top; font-size:13px; } th { color:var(--muted); font-size:12px; } tr:hover td { background:#fffaf0; }
+  .empty { padding:18px; border:2px dashed var(--line); border-radius:12px; color:var(--muted); }
+  .region-grid { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); margin-top:16px; } .region-card { padding:14px; border:2px solid var(--line); border-radius:12px; background:#fffdf8; }
+  .region-card .name { font-size:17px; font-weight:800; } .region-card .numbers { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px; }
+  .region-card .numbers span { display:block; color:var(--muted); font-size:11px; } .region-card .numbers strong { font-size:17px; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fill,minmax(155px,1fr)); gap:12px; margin-top:16px; }
+  .shot { position:relative; border:2px solid var(--line); border-radius:12px; overflow:hidden; background:#fffdf8; } .shot img { display:block; width:100%; height:150px; object-fit:cover; cursor:zoom-in; }
+  .shot .meta { padding:8px 10px; font-size:12px; color:var(--muted); } .shot .remove { position:absolute; top:7px; right:7px; border:0; border-radius:999px; background:rgba(38,38,31,.82); color:#fff; padding:4px 8px; }
+  .insights { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; } .insight { padding:15px; border-radius:12px; border:2px solid var(--line); background:var(--yellow); }
+  .insight strong { display:block; margin-bottom:5px; } .insight p { margin:0; font-size:13px; color:#5D5548; }
+  .brief { margin-top:16px; padding:16px; border:2px solid #B7DFDC; border-radius:12px; background:#EEF7F6; white-space:pre-wrap; font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; color:#274B48; }
+  .note { margin-top:16px; padding:14px 16px; border:2px solid #B7DFDC; border-radius:12px; background:#EEF7F6; font-size:13px; color:#365A57; }
+  .footer { margin-top:30px; color:var(--muted); text-align:center; font-size:12px; } dialog { border:0; padding:0; background:transparent; max-width:92vw; } dialog img { display:block; max-width:90vw; max-height:85vh; border:3px solid var(--ink); border-radius:12px; background:#fff; }
+  @media (max-width:1000px){ .toolbar{grid-template-columns:repeat(3,minmax(0,1fr));}.metrics{grid-template-columns:repeat(3,minmax(0,1fr));}.form-grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+  @media (max-width:700px){ .hero{display:grid;align-items:start;}.goal{min-width:0;}.toolbar,.form-grid,.metrics{grid-template-columns:repeat(2,minmax(0,1fr));}.toolbar .grow,.form-grid .wide{grid-column:span 2;}.insights{grid-template-columns:1fr;} }
+  @media (max-width:480px){ .page{padding:18px 10px 50px;}.panel{padding:16px;border-width:2px;box-shadow:3px 3px 0 var(--pink);}.toolbar,.form-grid,.metrics{grid-template-columns:1fr;}.toolbar .grow,.form-grid .wide{grid-column:auto;}.task{grid-template-columns:30px minmax(0,1fr);}.task .count{grid-column:2;} }
 </style>
 </head>
 <body>
@@ -185,344 +59,140 @@
   <header class="hero">
     <div>
       <p class="eyebrow">PixelBean Growth OS</p>
-      <h1>像素豆匣 · 每日增长看板</h1>
-      <p>每天的发布、互动、数据、复盘和截图，都放在这里。数据默认只保存在你的浏览器。</p>
+      <h1>像素豆匣 · 增长作战台</h1>
+      <p>地区日报、订阅数据、内容表现、评论截图和今天的任务，集中在一个页面。</p>
     </div>
-    <div class="goal">
-      <small>10,000 付费订阅目标</small>
-      <strong id="goalText">0 / 10,000</strong>
-      <div class="bar"><div id="goalBar"></div></div>
-      <small id="goalHint">先完成今天的三件事。</small>
-    </div>
+    <div class="goal"><small>10,000 付费订阅目标</small><strong id="goalText">0 / 10,000</strong><div class="bar"><div id="goalBar"></div></div><small id="goalHint">先完成今天的三件事。</small></div>
   </header>
 
   <section class="panel">
-    <h2>今日任务</h2>
-    <p class="sub">每完成一项就打勾，任务状态按日期保存。</p>
+    <h2>今日任务</h2><p class="sub">完成后打勾，任务状态按日期保存。“填写地区日报”会在你保存地区快照时自动完成。</p>
     <div class="toolbar">
       <label class="grow">查看日期<input type="date" id="viewDate"></label>
       <button class="btn secondary" id="copySummary" type="button">复制今日摘要</button>
-      <button class="btn secondary" id="exportCsv" type="button">导出 CSV</button>
+      <button class="btn secondary" id="exportCsv" type="button">导出内容 CSV</button>
+      <button class="btn secondary" id="exportRegionCsv" type="button">导出地区 CSV</button>
       <button class="btn" id="exportJson" type="button">导出给 Codex</button>
       <button class="btn secondary" id="exportBackup" type="button">完整备份</button>
       <label class="btn pink" for="importFile" style="text-align:center">导入备份</label>
       <input type="file" id="importFile" accept=".json,application/json" hidden>
     </div>
-    <div class="task-list" id="taskList"></div>
-    <div class="bar" style="margin-top:16px"><div id="taskBar"></div></div>
+    <div class="task-list" id="taskList"></div><div class="bar" style="margin-top:16px"><div id="taskBar"></div></div>
     <div class="metrics" id="summaryMetrics"></div>
   </section>
 
   <section class="panel">
-    <h2>记录数据</h2>
-    <p class="sub">每条内容单独记一条。即使没有下载，也先记录，后面才能判断哪种文案有效。</p>
-    <form id="recordForm" class="form-grid">
-      <input type="hidden" id="recordId">
-      <label>日期<input type="date" id="recordDate" required></label>
-      <label>平台<select id="platform"><option>小红书</option><option>抖音</option><option>App Store</option><option>Google Play</option><option>其他</option></select></label>
-      <label class="wide">内容标题<input type="text" id="title" placeholder="例如：一张照片变拼豆图纸"></label>
-      <label>浏览量<input type="number" id="views" min="0" step="1"></label>
-      <label>点赞<input type="number" id="likes" min="0" step="1"></label>
-      <label>收藏<input type="number" id="saves" min="0" step="1"></label>
-      <label>评论<input type="number" id="comments" min="0" step="1"></label>
-      <label>主页访问<input type="number" id="profileVisits" min="0" step="1"></label>
-      <label>下载<input type="number" id="installs" min="0" step="1"></label>
-      <label>新增付费会员<input type="number" id="paid" min="0" step="1"></label>
-      <label>投流花费<input type="number" id="adSpend" min="0" step="0.01"></label>
-      <label class="full">备注<textarea id="notes" placeholder="用户问了什么、哪一句文案带来下载、明天要复制的点"></textarea></label>
-      <div class="form-actions">
-        <button class="btn" type="submit">保存记录</button>
-        <button class="btn secondary" type="button" id="resetRecord">清空表单</button>
-      </div>
+    <h2>地区与订阅日报</h2><p class="sub">每天填一次各地区快照。付费订阅填写“当前有效付费订阅数”，不要填累计历史付费人数。</p>
+    <form id="regionForm" class="form-grid">
+      <input type="hidden" id="regionId">
+      <label>日期<input type="date" id="regionDate" required></label>
+      <label>地区<select id="region"><option>CN 中国大陆</option><option>US 美国</option><option>JP 日本</option><option>KR 韩国</option><option>TW 台湾</option><option>HK 香港</option><option>Other 其他</option></select></label>
+      <label>新增下载<input type="number" id="newInstalls" min="0" step="1"></label>
+      <label>活跃用户/设备<input type="number" id="activeUsers" min="0" step="1"></label>
+      <label>当前付费订阅<input type="number" id="paidSubscribers" min="0" step="1"></label>
+      <label>新增付费会员<input type="number" id="newPaid" min="0" step="1"></label>
+      <label>收入（人民币）<input type="number" id="revenue" min="0" step="0.01"></label>
+      <label class="wide">备注<input type="text" id="regionNotes" placeholder="例如：美国区广告带来 6 个订阅"></label>
+      <div class="form-actions"><button class="btn" type="submit">保存地区日报</button><button class="btn secondary" type="button" id="resetRegion">清空</button></div>
     </form>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>日期</th><th>平台</th><th>标题</th><th>浏览</th><th>收藏</th><th>评论</th><th>主页</th><th>下载</th><th>会员</th><th>花费</th><th>操作</th></tr></thead>
-        <tbody id="recordRows"></tbody>
-      </table>
-    </div>
+    <div class="region-grid" id="regionCards"></div>
+    <div class="table-wrap"><table><thead><tr><th>日期</th><th>地区</th><th>新增下载</th><th>活跃</th><th>当前付费</th><th>新增付费</th><th>收入</th><th>备注</th><th>操作</th></tr></thead><tbody id="regionRows"></tbody></table></div>
   </section>
 
   <section class="panel">
-    <h2>截图与素材</h2>
-    <p class="sub">上传小红书/抖音数据截图、封面、评论截图，方便复盘。截图只保存在当前浏览器。</p>
-    <label class="btn pink" for="screenshotInput" style="display:inline-block; width:auto">选择截图</label>
-    <input type="file" id="screenshotInput" accept="image/*" multiple hidden>
+    <h2>内容数据</h2><p class="sub">每条小红书或抖音内容单独记录。标题尽量使用原帖标题，方便判断什么文案更容易转化。</p>
+    <form id="contentForm" class="form-grid">
+      <input type="hidden" id="contentId">
+      <label>日期<input type="date" id="contentDate" required></label>
+      <label>平台<select id="platform"><option>小红书</option><option>抖音</option><option>App Store</option><option>Google Play</option><option>其他</option></select></label>
+      <label>面向地区<select id="contentRegion"><option>全部</option><option>CN 中国大陆</option><option>US 美国</option><option>JP 日本</option><option>KR 韩国</option><option>TW 台湾</option><option>HK 香港</option><option>Other 其他</option></select></label>
+      <label class="wide">内容标题<input type="text" id="title" placeholder="例如：一张照片变拼豆图纸"></label>
+      <label>浏览量<input type="number" id="views" min="0" step="1"></label><label>点赞<input type="number" id="likes" min="0" step="1"></label><label>收藏<input type="number" id="saves" min="0" step="1"></label><label>评论<input type="number" id="comments" min="0" step="1"></label>
+      <label>主页访问<input type="number" id="profileVisits" min="0" step="1"></label><label>下载<input type="number" id="installs" min="0" step="1"></label><label>新增付费会员<input type="number" id="paid" min="0" step="1"></label><label>投流花费<input type="number" id="adSpend" min="0" step="0.01"></label>
+      <label class="full">备注<textarea id="notes" placeholder="用户问了什么、哪句话带来下载、明天要复制什么"></textarea></label>
+      <div class="form-actions"><button class="btn" type="submit">保存内容记录</button><button class="btn secondary" type="button" id="resetContent">清空</button></div>
+    </form>
+    <div class="table-wrap"><table><thead><tr><th>日期</th><th>平台</th><th>地区</th><th>标题</th><th>浏览</th><th>收藏</th><th>评论</th><th>主页</th><th>下载</th><th>会员</th><th>花费</th><th>操作</th></tr></thead><tbody id="contentRows"></tbody></table></div>
+  </section>
+
+  <section class="panel">
+    <h2>评论与截图</h2><p class="sub">上传评论、私信、数据面板或封面截图。标签会随图片保存，便于后面判断用户意图。</p>
+    <div class="toolbar" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+      <label>截图地区<select id="shotRegion"><option>全部</option><option>CN 中国大陆</option><option>US 美国</option><option>JP 日本</option><option>KR 韩国</option><option>TW 台湾</option><option>HK 香港</option><option>Other 其他</option></select></label>
+      <label>截图类型<select id="shotCategory"><option>评论</option><option>私信</option><option>数据</option><option>封面</option><option>其他</option></select></label>
+      <label class="btn pink" for="screenshotInput" style="text-align:center;align-self:end">选择截图</label>
+      <input type="file" id="screenshotInput" accept="image/*" multiple hidden>
+    </div>
     <div class="shots" id="screenshotList"></div>
   </section>
 
   <section class="panel">
-    <h2>数据分析</h2>
-    <p class="sub">自动计算当前累计表现。数据越完整，判断越可靠。</p>
+    <h2>一图看懂 / Codex 简报</h2><p class="sub">点按钮生成一段可直接发给我的日报。我收到后就能按地区、内容和转化率给出调整方向。</p>
     <div class="insights" id="insights"></div>
-    <div class="note">静态网页不会把数据自动发给 Codex。需要我分析时，点击“导出给 Codex”，把下载的 JSON 发给我；也可以把截图直接发到聊天里。</div>
+    <div style="margin-top:14px"><button class="btn" type="button" id="copyBrief">复制 Codex 简报</button> <button class="btn secondary" type="button" id="refreshBrief">刷新简报</button></div>
+    <pre class="brief" id="briefBox">正在生成简报…</pre>
+    <div class="note">数据只保存在当前浏览器。需要我分析时，把 Codex 简报粘贴到聊天里，或点“导出给 Codex”发 JSON。截图可以直接上传到聊天。</div>
   </section>
 
-  <div class="footer">像素豆匣 · 增长看板 · 所有数据默认保存在本地浏览器</div>
+  <div class="footer">像素豆匣 · 增长作战台 · 数据默认保存在本地浏览器</div>
 </div>
 <dialog id="imageDialog"><img id="dialogImage" alt="截图预览"></dialog>
 <script>
 (function () {
   "use strict";
-  var STORE_KEY = "pixelbean-growth-v1";
-  var DB_NAME = "pixelbean-growth";
-  var DB_VERSION = 1;
-  var SHOT_STORE = "screenshots";
-  var db = null;
-  var state = { tasks: {}, records: [], screenshots: [] };
-
-  var tasks = [
-    { id: "douyin", title: "抖音发布 1 条", desc: "效果对比 / 教程 / 成品展示" },
-    { id: "xhs", title: "小红书发布 1 篇", desc: "图文或短视频，标题突出照片变图纸" },
-    { id: "reply", title: "回复评论和私信", desc: "记录用户真正问的问题" },
-    { id: "data", title: "记录今天的数据", desc: "浏览、收藏、评论、下载、会员" },
-    { id: "review", title: "复盘 1 条内容", desc: "决定明天复制还是换钩子" }
+  var STORE_KEY="pixelbean-growth-v2", LEGACY_KEY="pixelbean-growth-v1", DB_NAME="pixelbean-growth", DB_VERSION=1, SHOT_STORE="screenshots";
+  var db=null, state={tasks:{},content:[],region:[],screenshots:[]};
+  var regions=["CN 中国大陆","US 美国","JP 日本","KR 韩国","TW 台湾","HK 香港","Other 其他"];
+  var tasks=[
+    {id:"douyin",title:"抖音发布 1 条",desc:"效果对比 / 教程 / 成品展示"},
+    {id:"xhs",title:"小红书发布 1 篇",desc:"图文或短视频，标题突出照片变图纸"},
+    {id:"reply",title:"回复评论和私信",desc:"记录用户真正问的问题"},
+    {id:"snapshot",title:"填写地区与订阅日报",desc:"每个地区填新增下载、活跃、当前付费和新增付费"},
+    {id:"data",title:"记录内容数据",desc:"浏览、收藏、评论、主页、下载、会员"},
+    {id:"review",title:"复盘 1 条内容",desc:"决定明天复制还是换钩子"}
   ];
-
-  function $(id) { return document.getElementById(id); }
-  function todayStr() {
-    var d = new Date();
-    var offset = d.getTimezoneOffset() * 60000;
-    return new Date(d.getTime() - offset).toISOString().slice(0, 10);
-  }
-  function uid() {
-    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
-    return Date.now().toString(36) + Math.random().toString(36).slice(2);
-  }
-  function num(id) { return Number($(id).value || 0); }
-  function fmt(n) { return Number(n || 0).toLocaleString(); }
-  function esc(s) {
-    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
-    });
-  }
-  function loadState() {
-    try {
-      var raw = localStorage.getItem(STORE_KEY);
-      if (raw) state = Object.assign(state, JSON.parse(raw));
-    } catch (e) { console.warn("load state failed", e); }
-  }
-  function saveState() {
-    localStorage.setItem(STORE_KEY, JSON.stringify({ tasks: state.tasks, records: state.records, version: 1 }));
-  }
-  function openDb() {
-    return new Promise(function (resolve, reject) {
-      if (!window.indexedDB) return resolve(null);
-      var req = indexedDB.open(DB_NAME, DB_VERSION);
-      req.onupgradeneeded = function () {
-        var dbx = req.result;
-        if (!dbx.objectStoreNames.contains(SHOT_STORE)) dbx.createObjectStore(SHOT_STORE, { keyPath: "id" });
-      };
-      req.onsuccess = function () { resolve(req.result); };
-      req.onerror = function () { reject(req.error); };
-    });
-  }
-  function allShots() {
-    if (!db) return Promise.resolve(state.screenshots || []);
-    return new Promise(function (resolve, reject) {
-      var tx = db.transaction(SHOT_STORE, "readonly");
-      var req = tx.objectStore(SHOT_STORE).getAll();
-      req.onsuccess = function () { resolve(req.result || []); };
-      req.onerror = function () { reject(req.error); };
-    });
-  }
-  function putShot(shot) {
-    if (!db) { state.screenshots = (state.screenshots || []).filter(function (x) { return x.id !== shot.id; }).concat(shot); return Promise.resolve(); }
-    return new Promise(function (resolve, reject) {
-      var tx = db.transaction(SHOT_STORE, "readwrite");
-      tx.objectStore(SHOT_STORE).put(shot);
-      tx.oncomplete = resolve;
-      tx.onerror = function () { reject(tx.error); };
-    });
-  }
-  function removeShot(id) {
-    if (!db) { state.screenshots = (state.screenshots || []).filter(function (x) { return x.id !== id; }); return Promise.resolve(); }
-    return new Promise(function (resolve, reject) {
-      var tx = db.transaction(SHOT_STORE, "readwrite");
-      tx.objectStore(SHOT_STORE).delete(id);
-      tx.oncomplete = resolve;
-      tx.onerror = function () { reject(tx.error); };
-    });
-  }
-  function renderTasks() {
-    var date = $("viewDate").value || todayStr();
-    var done = state.tasks[date] || {};
-    $("taskList").innerHTML = tasks.map(function (task) {
-      var checked = !!done[task.id];
-      return '<label class="task ' + (checked ? 'done' : '') + '">' +
-        '<input type="checkbox" data-task="' + task.id + '" ' + (checked ? 'checked' : '') + '>' +
-        '<span><strong>' + esc(task.title) + '</strong><small>' + esc(task.desc) + '</small></span>' +
-        '<span class="count">' + (checked ? '已完成' : '待完成') + '</span></label>';
-    }).join("");
-    var count = tasks.filter(function (t) { return done[t.id]; }).length;
-    $("taskBar").style.width = Math.round(count / tasks.length * 100) + "%";
-  }
-  function toggleTask(id, checked) {
-    var date = $("viewDate").value || todayStr();
-    state.tasks[date] = state.tasks[date] || {};
-    state.tasks[date][id] = checked;
-    saveState();
-    renderTasks();
-  }
-  function recordRows() {
-    return state.records.slice().sort(function (a, b) { return (b.date + b.id).localeCompare(a.date + a.id); });
-  }
-  function renderRecords() {
-    var rows = recordRows();
-    if (!rows.length) {
-      $("recordRows").innerHTML = '<tr><td colspan="11" class="empty">还没有记录。今天先记一条小红书或抖音数据。</td></tr>';
-    } else {
-      $("recordRows").innerHTML = rows.map(function (r) {
-        return '<tr>' +
-          '<td>' + esc(r.date) + '</td><td>' + esc(r.platform) + '</td><td>' + esc(r.title) + '</td>' +
-          '<td>' + fmt(r.views) + '</td><td>' + fmt(r.saves) + '</td><td>' + fmt(r.comments) + '</td>' +
-          '<td>' + fmt(r.profileVisits) + '</td><td>' + fmt(r.installs) + '</td><td>' + fmt(r.paid) + '</td>' +
-          '<td>¥' + Number(r.adSpend || 0).toFixed(2) + '</td>' +
-          '<td><button class="btn red" type="button" data-delete="' + esc(r.id) + '">删除</button></td></tr>';
-      }).join("");
-    }
-    renderInsights();
-  }
-  function renderInsights() {
-    var rows = state.records || [];
-    var total = rows.reduce(function (a, r) {
-      a.views += Number(r.views || 0); a.saves += Number(r.saves || 0); a.comments += Number(r.comments || 0);
-      a.profile += Number(r.profileVisits || 0); a.installs += Number(r.installs || 0); a.paid += Number(r.paid || 0); a.spend += Number(r.adSpend || 0); return a;
-    }, { views: 0, saves: 0, comments: 0, profile: 0, installs: 0, paid: 0, spend: 0 });
-    var saveRate = total.views ? total.saves / total.views * 100 : 0;
-    var installRate = total.profile ? total.installs / total.profile * 100 : 0;
-    var paidRate = total.installs ? total.paid / total.installs * 100 : 0;
-    $("summaryMetrics").innerHTML = [
-      ["记录条数", rows.length], ["总浏览", fmt(total.views)], ["总收藏", fmt(total.saves)],
-      ["总下载", fmt(total.installs)], ["新增会员", fmt(total.paid)]
-    ].map(function (x) { return '<div class="metric"><span>' + x[0] + '</span><strong>' + x[1] + '</strong></div>'; }).join("");
-    $("goalText").textContent = fmt(total.paid) + " / 10,000";
-    $("goalBar").style.width = Math.min(100, total.paid / 10000 * 100) + "%";
-    $("goalHint").textContent = total.paid ? "继续记录每天的真实转化。" : "先完成今天的三件事。";
-
-    var top = rows.slice().sort(function (a, b) { return (b.installs || 0) - (a.installs || 0) || (b.saves || 0) - (a.saves || 0); })[0];
-    var tips = [];
-    tips.push({ title: "内容诊断", text: !rows.length ? "先记录 3 天数据，再判断文案。" : (saveRate >= 3 ? "收藏率不错，复制这条内容的结构。" : "收藏率偏低，优先改封面和前 3 秒钩子。") });
-    tips.push({ title: "下载诊断", text: !rows.length ? "记录主页访问和下载后，才能计算转化。" : (installRate >= 15 ? "主页到下载转化不错，可以加量。" : "主页到下载偏低，检查主页简介、下载入口和商店截图。") });
-    tips.push({ title: "最佳内容", text: top && top.title ? ("当前下载最高：" + top.title) : "还没有足够数据。每篇内容都记标题。" });
-    $("insights").innerHTML = tips.map(function (x) { return '<div class="insight"><strong>' + esc(x.title) + '</strong><p>' + esc(x.text) + '</p></div>'; }).join("");
-  }
-  function resetRecord() {
-    $("recordId").value = "";
-    $("recordDate").value = $("viewDate").value || todayStr();
-    $("platform").value = "小红书";
-    ["title","views","likes","saves","comments","profileVisits","installs","paid","adSpend","notes"].forEach(function (id) { $(id).value = ""; });
-  }
-  function saveRecord(event) {
-    event.preventDefault();
-    var record = {
-      id: $("recordId").value || uid(),
-      date: $("recordDate").value || todayStr(),
-      platform: $("platform").value,
-      title: $("title").value.trim(),
-      views: num("views"), likes: num("likes"), saves: num("saves"), comments: num("comments"),
-      profileVisits: num("profileVisits"), installs: num("installs"), paid: num("paid"), adSpend: num("adSpend"),
-      notes: $("notes").value.trim()
-    };
-    var idx = state.records.findIndex(function (r) { return r.id === record.id; });
-    if (idx >= 0) state.records[idx] = record; else state.records.push(record);
-    saveState(); resetRecord(); renderRecords();
-  }
-  function download(name, content, type) {
-    var blob = new Blob([content], { type: type });
-    var a = document.createElement("a");
-    a.href = URL.createObjectURL(blob); a.download = name; a.click();
-    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
-  }
-  function csv() {
-    var head = ["date","platform","title","views","likes","saves","comments","profile_visits","installs","paid_subscribers","ad_spend","notes"];
-    var lines = [head.join(",")];
-    recordRows().forEach(function (r) {
-      lines.push([r.date,r.platform,r.title,r.views,r.likes,r.saves,r.comments,r.profileVisits,r.installs,r.paid,r.adSpend,r.notes].map(function (v) { return '"' + String(v == null ? "" : v).replace(/"/g,'""') + '"'; }).join(","));
-    });
-    return lines.join("\n");
-  }
-  async function exportData(includeShots) {
-    var payload = { exportedAt: new Date().toISOString(), tasks: state.tasks, records: state.records, screenshots: includeShots ? await allShots() : [] };
-    download("pixelbean-growth-" + todayStr() + ".json", JSON.stringify(payload, null, 2), "application/json");
-  }
-  function summaryText() {
-    var date = $("viewDate").value || todayStr();
-    var done = state.tasks[date] || {};
-    var records = state.records.filter(function (r) { return r.date === date; });
-    var total = records.reduce(function (a, r) { a.views += Number(r.views || 0); a.saves += Number(r.saves || 0); a.installs += Number(r.installs || 0); a.paid += Number(r.paid || 0); return a; }, { views: 0, saves: 0, installs: 0, paid: 0 });
-    return "像素豆匣增长日报 " + date + "\n任务：" + tasks.filter(function (t) { return done[t.id]; }).length + "/" + tasks.length + "\n记录：" + records.length + " 条\n浏览：" + total.views + " 收藏：" + total.saves + " 下载：" + total.installs + " 会员：" + total.paid;
-  }
-  async function copySummary() {
-    try { await navigator.clipboard.writeText(summaryText()); alert("今日摘要已复制"); } catch (e) { alert(summaryText()); }
-  }
-  function renderShots() {
-    var shots = state.screenshots || [];
-    $("screenshotList").innerHTML = shots.length ? shots.map(function (s) {
-      return '<div class="shot"><img src="' + s.dataUrl + '" alt="' + esc(s.name) + '" data-preview="' + esc(s.id) + '">' +
-        '<button class="remove" type="button" data-remove-shot="' + esc(s.id) + '">删除</button>' +
-        '<div class="meta">' + esc(s.date) + ' · ' + esc(s.name) + '</div></div>';
-    }).join("") : '<div class="empty">还没有截图。上传数据截图、封面或评论截图，便于之后复盘。</div>';
-  }
-  async function addShots(files) {
-    for (var i = 0; i < files.length; i++) {
-      var file = files[i];
-      if (!file.type.startsWith("image/")) continue;
-      var dataUrl = await new Promise(function (resolve, reject) {
-        var reader = new FileReader();
-        reader.onload = function () { resolve(reader.result); };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-      var shot = { id: uid(), date: todayStr(), name: file.name, dataUrl: dataUrl, size: file.size };
-      await putShot(shot);
-    }
-    state.screenshots = await allShots();
-    renderShots();
-  }
-  async function importFile(file) {
-    var text = await file.text();
-    var data = JSON.parse(text);
-    state.tasks = data.tasks || {};
-    state.records = data.records || [];
-    if (Array.isArray(data.screenshots)) {
-      state.screenshots = data.screenshots;
-      if (!db) { saveState(); } else {
-        var tx = db.transaction(SHOT_STORE, "readwrite"); tx.objectStore(SHOT_STORE).clear();
-        data.screenshots.forEach(function (s) { tx.objectStore(SHOT_STORE).put(s); });
-      }
-    }
-    saveState(); renderTasks(); renderRecords(); renderShots();
-  }
-  async function init() {
-    loadState();
-    try { db = await openDb(); state.screenshots = await allShots(); } catch (e) { console.warn("indexeddb unavailable", e); state.screenshots = state.screenshots || []; }
-    $("viewDate").value = todayStr(); $("recordDate").value = todayStr();
-    renderTasks(); renderRecords(); renderShots();
-    $("taskList").addEventListener("change", function (e) { if (e.target.dataset.task) toggleTask(e.target.dataset.task, e.target.checked); });
-    $("viewDate").addEventListener("change", function () { $("recordDate").value = $("viewDate").value; renderTasks(); });
-    $("recordForm").addEventListener("submit", saveRecord);
-    $("resetRecord").addEventListener("click", resetRecord);
-    $("copySummary").addEventListener("click", copySummary);
-    $("exportCsv").addEventListener("click", function () { download("pixelbean-growth-" + todayStr() + ".csv", csv(), "text/csv;charset=utf-8"); });
-    $("exportJson").addEventListener("click", function () { exportData(false); });
-    $("exportBackup").addEventListener("click", function () { exportData(true); });
-    $("importFile").addEventListener("change", function (e) { if (e.target.files[0]) importFile(e.target.files[0]); });
-    $("screenshotInput").addEventListener("change", function (e) { addShots(e.target.files); e.target.value = ""; });
-    $("recordRows").addEventListener("click", function (e) {
-      var id = e.target.dataset.delete;
-      if (id) { state.records = state.records.filter(function (r) { return r.id !== id; }); saveState(); renderRecords(); }
-    });
-    $("screenshotList").addEventListener("click", function (e) {
-      var id = e.target.dataset.removeShot;
-      if (id) { removeShot(id).then(function () { state.screenshots = (state.screenshots || []).filter(function (s) { return s.id !== id; }); renderShots(); }); return; }
-      if (e.target.dataset.preview) {
-        var shot = (state.screenshots || []).find(function (s) { return s.id === e.target.dataset.preview; });
-        if (shot) { $("dialogImage").src = shot.dataUrl; $("imageDialog").showModal(); }
-      }
-    });
-  }
-  init().catch(function (e) { console.error(e); alert("看板初始化失败：" + e.message); });
+  function $(id){return document.getElementById(id);}
+  function todayStr(){var d=new Date(),o=d.getTimezoneOffset()*60000;return new Date(d.getTime()-o).toISOString().slice(0,10);}
+  function uid(){return (crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));}
+  function n(id){return Number($(id).value||0);}
+  function fmt(v){return Number(v||0).toLocaleString();}
+  function esc(v){return String(v==null?"":v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+  function loadState(){try{var raw=localStorage.getItem(STORE_KEY)||localStorage.getItem(LEGACY_KEY);if(raw){var old=JSON.parse(raw);state.tasks=old.tasks||{};state.content=old.content||old.records||[];state.region=old.region||[];state.screenshots=old.screenshots||[];}}catch(e){console.warn(e);}}
+  function saveState(){localStorage.setItem(STORE_KEY,JSON.stringify({version:2,tasks:state.tasks,content:state.content,region:state.region}));}
+  function openDb(){return new Promise(function(resolve,reject){if(!window.indexedDB)return resolve(null);var r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=function(){if(!r.result.objectStoreNames.contains(SHOT_STORE))r.result.createObjectStore(SHOT_STORE,{keyPath:"id"});};r.onsuccess=function(){resolve(r.result);};r.onerror=function(){reject(r.error);};});}
+  function allShots(){if(!db)return Promise.resolve(state.screenshots||[]);return new Promise(function(resolve,reject){var t=db.transaction(SHOT_STORE,"readonly"),q=t.objectStore(SHOT_STORE).getAll();q.onsuccess=function(){resolve(q.result||[]);};q.onerror=function(){reject(q.error);};});}
+  function putShot(s){if(!db){state.screenshots=(state.screenshots||[]).filter(function(x){return x.id!==s.id;}).concat(s);return Promise.resolve();}return new Promise(function(resolve,reject){var t=db.transaction(SHOT_STORE,"readwrite");t.objectStore(SHOT_STORE).put(s);t.oncomplete=resolve;t.onerror=function(){reject(t.error);};});}
+  function removeShot(id){if(!db){state.screenshots=(state.screenshots||[]).filter(function(x){return x.id!==id;});return Promise.resolve();}return new Promise(function(resolve,reject){var t=db.transaction(SHOT_STORE,"readwrite");t.objectStore(SHOT_STORE).delete(id);t.oncomplete=resolve;t.onerror=function(){reject(t.error);};});}
+  function markTask(date,id,val){state.tasks[date]=state.tasks[date]||{};state.tasks[date][id]=val;saveState();renderTasks();}
+  function renderTasks(){var date=$("viewDate").value||todayStr(),done=state.tasks[date]||{};$("taskList").innerHTML=tasks.map(function(t){var c=!!done[t.id];return '<label class="task '+(c?'done':'')+'"><input type="checkbox" data-task="'+t.id+'" '+(c?'checked':'')+'><span><strong>'+esc(t.title)+'</strong><small>'+esc(t.desc)+'</small></span><span class="count">'+(c?'已完成':'待完成')+'</span></label>';}).join("");var count=tasks.filter(function(t){return done[t.id];}).length;$("taskBar").style.width=Math.round(count/tasks.length*100)+"%";}
+  function rowCompare(a,b){return (b.date+String(b.updatedAt||b.id)).localeCompare(a.date+String(a.updatedAt||a.id));}
+  function regionRows(){return state.region.slice().sort(rowCompare);}
+  function contentRows(){return state.content.slice().sort(rowCompare);}
+  function latestRegion(){var map={};regionRows().forEach(function(r){if(!map[r.region])map[r.region]=r;});return map;}
+  function snapshotsForDate(date){return state.region.filter(function(r){return r.date===date;});}
+  function renderRegion(){var latest=latestRegion();$("regionCards").innerHTML=regions.map(function(name){var x=latest[name]||{};return '<div class="region-card"><div class="name">'+esc(name)+'</div><div class="numbers"><div><span>当前付费</span><strong>'+fmt(x.paidSubscribers)+'</strong></div><div><span>活跃用户</span><strong>'+fmt(x.activeUsers)+'</strong></div><div><span>最新下载</span><strong>'+fmt(x.newInstalls)+'</strong></div><div><span>新增付费</span><strong>'+fmt(x.newPaid)+'</strong></div></div></div>';}).join("");var rows=regionRows();$("regionRows").innerHTML=rows.length?rows.map(function(r){return '<tr><td>'+esc(r.date)+'</td><td>'+esc(r.region)+'</td><td>'+fmt(r.newInstalls)+'</td><td>'+fmt(r.activeUsers)+'</td><td>'+fmt(r.paidSubscribers)+'</td><td>'+fmt(r.newPaid)+'</td><td>¥'+Number(r.revenue||0).toFixed(2)+'</td><td>'+esc(r.notes)+'</td><td><button class="btn red" type="button" data-del-region="'+esc(r.id)+'">删除</button></td></tr>';}).join(""):'<tr><td colspan="9" class="empty">还没有地区日报。先填今天的数据。</td></tr>';}
+  function renderContent(){var rows=contentRows();$("contentRows").innerHTML=rows.length?rows.map(function(r){return '<tr><td>'+esc(r.date)+'</td><td>'+esc(r.platform)+'</td><td>'+esc(r.contentRegion||"全部")+'</td><td>'+esc(r.title)+'</td><td>'+fmt(r.views)+'</td><td>'+fmt(r.saves)+'</td><td>'+fmt(r.comments)+'</td><td>'+fmt(r.profileVisits)+'</td><td>'+fmt(r.installs)+'</td><td>'+fmt(r.paid)+'</td><td>¥'+Number(r.adSpend||0).toFixed(2)+'</td><td><button class="btn red" type="button" data-del-content="'+esc(r.id)+'">删除</button></td></tr>';}).join(""):'<tr><td colspan="12" class="empty">还没有内容记录。今天发的内容也记一下。</td></tr>';}
+  function renderShots(){var rows=state.screenshots||[];$("screenshotList").innerHTML=rows.length?rows.map(function(s){return '<div class="shot"><img src="'+s.dataUrl+'" alt="'+esc(s.name)+'" data-preview="'+esc(s.id)+'"><button class="remove" type="button" data-remove-shot="'+esc(s.id)+'">删除</button><div class="meta">'+esc(s.date)+' · '+esc(s.category||"其他")+' · '+esc(s.region||"全部")+'<br>'+esc(s.name)+'</div></div>';}).join(""):'<div class="empty">还没有截图。上传评论、私信、数据面板或封面截图。</div>';}
+  function renderSummary(){var date=$("viewDate").value||todayStr(),todaySnaps=snapshotsForDate(date),todayContent=state.content.filter(function(r){return r.date===date;}),latest=latestRegion();var paid=Object.keys(latest).reduce(function(a,k){return a+Number(latest[k].paidSubscribers||0);},0),newInst=todaySnaps.reduce(function(a,r){return a+Number(r.newInstalls||0);},0),newPaid=todaySnaps.reduce(function(a,r){return a+Number(r.newPaid||0);},0),views=todayContent.reduce(function(a,r){return a+Number(r.views||0);},0),installs=todayContent.reduce(function(a,r){return a+Number(r.installs||0);},0),revenue=todaySnaps.reduce(function(a,r){return a+Number(r.revenue||0);},0);$("summaryMetrics").innerHTML=[["当前付费订阅",fmt(paid)],["今日新增下载",fmt(newInst)],["今日新增付费",fmt(newPaid)],["今日内容浏览",fmt(views)],["今日内容带来下载",fmt(installs)],["今日收入",'¥'+Number(revenue).toFixed(2)]].map(function(x){return '<div class="metric"><span>'+x[0]+'</span><strong>'+x[1]+'</strong></div>';}).join("");$("goalText").textContent=fmt(paid)+" / 10,000";$("goalBar").style.width=Math.min(100,paid/10000*100)+"%";$("goalHint").textContent=paid?"继续记录每天的真实转化。":"先完成今天的三件事。";}
+  function renderInsights(){var latest=latestRegion(),regionList=regions.map(function(r){return {name:r,data:latest[r]||{}};}).filter(function(x){return x.data.paidSubscribers||x.data.newInstalls||x.data.activeUsers;});var topRegion=regionList.slice().sort(function(a,b){return Number(b.data.newInstalls||0)-Number(a.data.newInstalls||0);})[0];var best=state.content.slice().sort(function(a,b){return Number(b.installs||0)-Number(a.installs||0)||Number(b.saves||0)-Number(a.saves||0);})[0];var views=state.content.reduce(function(a,r){return a+Number(r.views||0);},0),saves=state.content.reduce(function(a,r){return a+Number(r.saves||0);},0),installs=state.content.reduce(function(a,r){return a+Number(r.installs||0);},0);var saveRate=views?saves/views*100:0,installRate=installs?saves/installs*100:0;var tips=[{title:"地区重点",text:topRegion?("下载最多："+topRegion.name+"。先复制该地区的内容和投放方式。"):"先填地区日报，才能判断重点地区。"},{title:"内容方向",text:best&&best.title?("下载最高："+best.title+"。检查它的标题、封面和前 3 秒。"):"至少记录 3 条内容后再判断。"},{title:"转化提醒",text:views?("收藏率 "+saveRate.toFixed(1)+"%。" + (saveRate>=3?"可复制这类内容。":"优先改封面和开头。")):"先记录浏览和收藏。"}];$("insights").innerHTML=tips.map(function(x){return '<div class="insight"><strong>'+esc(x.title)+'</strong><p>'+esc(x.text)+'</p></div>';}).join("");}
+  function regionById(id){return state.region.find(function(r){return r.id===id;});}
+  function contentById(id){return state.content.find(function(r){return r.id===id;});}
+  function resetRegion(){$("regionId").value="";$("regionDate").value=$("viewDate").value||todayStr();$("region").value=regions[0];["newInstalls","activeUsers","paidSubscribers","newPaid","revenue","regionNotes"].forEach(function(id){$(id).value="";});}
+  function resetContent(){$("contentId").value="";$("contentDate").value=$("viewDate").value||todayStr();$("platform").value="小红书";$("contentRegion").value="全部";["title","views","likes","saves","comments","profileVisits","installs","paid","adSpend","notes"].forEach(function(id){$(id).value="";});}
+  function saveRegion(e){e.preventDefault();var rec={id:$("regionId").value||uid(),date:$("regionDate").value||todayStr(),region:$("region").value,newInstalls:n("newInstalls"),activeUsers:n("activeUsers"),paidSubscribers:n("paidSubscribers"),newPaid:n("newPaid"),revenue:n("revenue"),notes:$("regionNotes").value.trim(),updatedAt:Date.now()};var i=state.region.findIndex(function(r){return r.id===rec.id;});if(i>=0)state.region[i]=rec;else{var j=state.region.findIndex(function(r){return r.date===rec.date&&r.region===rec.region;});if(j>=0)state.region[j]=Object.assign(state.region[j],rec,{id:state.region[j].id});else state.region.push(rec);}markTask(rec.date,"snapshot",true);saveState();resetRegion();renderAll();}
+  function saveContent(e){e.preventDefault();var rec={id:$("contentId").value||uid(),date:$("contentDate").value||todayStr(),platform:$("platform").value,contentRegion:$("contentRegion").value,title:$("title").value.trim(),views:n("views"),likes:n("likes"),saves:n("saves"),comments:n("comments"),profileVisits:n("profileVisits"),installs:n("installs"),paid:n("paid"),adSpend:n("adSpend"),notes:$("notes").value.trim(),updatedAt:Date.now()};var i=state.content.findIndex(function(r){return r.id===rec.id;});if(i>=0)state.content[i]=rec;else state.content.push(rec);markTask(rec.date,"data",true);saveState();resetContent();renderAll();}
+  function csvContent(){var h=["date","platform","region","title","views","likes","saves","comments","profile_visits","installs","paid_subscribers","ad_spend","notes"],l=[h.join(",")];contentRows().forEach(function(r){l.push([r.date,r.platform,r.contentRegion,r.title,r.views,r.likes,r.saves,r.comments,r.profileVisits,r.installs,r.paid,r.adSpend,r.notes].map(function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"';}).join(","));});return l.join("\n");}
+  function csvRegion(){var h=["date","region","new_installs","active_users","paid_subscribers","new_paid","revenue","notes"],l=[h.join(",")];regionRows().forEach(function(r){l.push([r.date,r.region,r.newInstalls,r.activeUsers,r.paidSubscribers,r.newPaid,r.revenue,r.notes].map(function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"';}).join(","));});return l.join("\n");}
+  function download(name,content,type){var blob=new Blob([content],{type:type}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(function(){URL.revokeObjectURL(a.href);},1000);}
+  function buildBrief(){var date=$("viewDate").value||todayStr(),snaps=snapshotsForDate(date),content=state.content.filter(function(r){return r.date===date;}),latest=latestRegion();var lines=["像素豆匣增长日报 "+date,"","地区快照："];regions.forEach(function(r){var x=snaps.find(function(y){return y.region===r;})||latest[r]||{};if(x.newInstalls||x.activeUsers||x.paidSubscribers||x.newPaid)lines.push(r+"：新增下载 "+fmt(x.newInstalls)+"｜活跃 "+fmt(x.activeUsers)+"｜当前付费 "+fmt(x.paidSubscribers)+"｜新增付费 "+fmt(x.newPaid)+"｜收入 ¥"+Number(x.revenue||0).toFixed(2));});if(!snaps.length)lines.push("今天还没有地区快照。");lines.push("","内容表现：");if(content.length){content.slice().sort(function(a,b){return Number(b.installs||0)-Number(a.installs||0);}).forEach(function(r){lines.push(r.platform+"｜"+r.contentRegion+"｜"+r.title+"｜浏览 "+fmt(r.views)+"｜收藏 "+fmt(r.saves)+"｜评论 "+fmt(r.comments)+"｜主页 "+fmt(r.profileVisits)+"｜下载 "+fmt(r.installs)+"｜会员 "+fmt(r.paid)+"｜花费 ¥"+Number(r.adSpend||0).toFixed(2));});}else lines.push("今天还没有内容记录。");var best=state.content.slice().sort(function(a,b){return Number(b.installs||0)-Number(a.installs||0)||Number(b.saves||0)-Number(a.saves||0);})[0];lines.push("","建议：");lines.push(best&&best.title?("优先复制：「"+best.title+"」的标题、封面和前 3 秒。"):"先完成 3 条内容记录，再判断文案。");lines.push("下一步：根据上面地区下载和付费数据，增加高转化地区内容，停止低效地区投放。");return lines.join("\n");}
+  function renderBrief(){$("briefBox").textContent=buildBrief();}
+  function copySummary(){var txt=buildBrief();if(navigator.clipboard)navigator.clipboard.writeText(txt).then(function(){alert("已复制今日摘要");},function(){alert(txt);});else alert(txt);}
+  function renderAll(){renderTasks();renderRegion();renderContent();renderSummary();renderInsights();renderBrief();}
+  async function addShots(files){var region=$("shotRegion").value,category=$("shotCategory").value;for(var i=0;i<files.length;i++){var f=files[i];if(!f.type.startsWith("image/"))continue;var dataUrl=await new Promise(function(resolve,reject){var r=new FileReader();r.onload=function(){resolve(r.result);};r.onerror=reject;r.readAsDataURL(f);});await putShot({id:uid(),date:$("viewDate").value||todayStr(),region:region,category:category,name:f.name,dataUrl:dataUrl,size:f.size});}state.screenshots=await allShots();renderShots();}
+  async function exportJson(includeShots){var shots=includeShots?await allShots():[];download("pixelbean-growth-"+todayStr()+".json",JSON.stringify({version:2,exportedAt:new Date().toISOString(),tasks:state.tasks,content:state.content,region:state.region,screenshots:shots},null,2),"application/json");}
+  async function importJson(file){var d=JSON.parse(await file.text());state.tasks=d.tasks||{};state.content=d.content||d.records||[];state.region=d.region||[];if(Array.isArray(d.screenshots)){state.screenshots=d.screenshots;if(db){var t=db.transaction(SHOT_STORE,"readwrite");t.objectStore(SHOT_STORE).clear();d.screenshots.forEach(function(s){t.objectStore(SHOT_STORE).put(s);});}}saveState();renderAll();renderShots();}
+  async function init(){loadState();try{db=await openDb();state.screenshots=await allShots();}catch(e){console.warn(e);} $("viewDate").value=todayStr();$("regionDate").value=todayStr();$("contentDate").value=todayStr();resetRegion();resetContent();renderAll();renderShots();$("taskList").addEventListener("change",function(e){if(e.target.dataset.task)markTask($("viewDate").value,e.target.dataset.task,e.target.checked);});$("viewDate").addEventListener("change",function(){$("regionDate").value=$("viewDate").value;$("contentDate").value=$("viewDate").value;renderAll();});$("regionForm").addEventListener("submit",saveRegion);$("contentForm").addEventListener("submit",saveContent);$("resetRegion").addEventListener("click",resetRegion);$("resetContent").addEventListener("click",resetContent);$("copySummary").addEventListener("click",copySummary);$("copyBrief").addEventListener("click",copySummary);$("refreshBrief").addEventListener("click",renderBrief);$("exportCsv").addEventListener("click",function(){download("pixelbean-content-"+todayStr()+".csv",csvContent(),"text/csv;charset=utf-8");});$("exportRegionCsv").addEventListener("click",function(){download("pixelbean-region-"+todayStr()+".csv",csvRegion(),"text/csv;charset=utf-8");});$("exportJson").addEventListener("click",function(){exportJson(false);});$("exportBackup").addEventListener("click",function(){exportJson(true);});$("importFile").addEventListener("change",function(e){if(e.target.files[0])importJson(e.target.files[0]);});$("screenshotInput").addEventListener("change",function(e){addShots(e.target.files);e.target.value="";});$("regionRows").addEventListener("click",function(e){var id=e.target.dataset.delRegion;if(id){state.region=state.region.filter(function(r){return r.id!==id;});saveState();renderAll();}});$("contentRows").addEventListener("click",function(e){var id=e.target.dataset.delContent;if(id){state.content=state.content.filter(function(r){return r.id!==id;});saveState();renderAll();}});$("screenshotList").addEventListener("click",function(e){var id=e.target.dataset.removeShot;if(id){removeShot(id).then(function(){state.screenshots=(state.screenshots||[]).filter(function(s){return s.id!==id;});renderShots();});return;}if(e.target.dataset.preview){var s=(state.screenshots||[]).find(function(x){return x.id===e.target.dataset.preview;});if(s){$("dialogImage").src=s.dataUrl;$("imageDialog").showModal();}}});}
+  init().catch(function(e){console.error(e);alert("看板初始化失败："+e.message);});
 })();
 </script>
 </body>
