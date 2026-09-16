@@ -4,6 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>像素豆匣 · 隐私政策</title>
+<meta name="description" content="PixelBean Privacy Policy / 像素豆匣隐私政策">
+<script>
+(function () {
+  var lang = 'zh';
+  try {
+    var queryLang = new URLSearchParams(window.location.search).get('lang');
+    var savedLang = window.localStorage.getItem('pixelbean-privacy-language');
+    var browserLang = navigator.language || (navigator.languages && navigator.languages[0]) || 'en';
+    var value = queryLang || savedLang || browserLang;
+    lang = value && value.toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+  } catch (error) {
+    lang = (navigator.language && navigator.language.toLowerCase().indexOf('zh') === 0) ? 'zh' : 'en';
+  }
+  document.documentElement.setAttribute('data-lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+})();
+</script>
+<link rel="canonical" href="https://DD9579.github.io/perler-beads-privacy/private.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://DD9579.github.io/perler-beads-privacy/private.html?lang=zh">
+<link rel="alternate" hreflang="en" href="https://DD9579.github.io/perler-beads-privacy/private.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://DD9579.github.io/perler-beads-privacy/private.html">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -11,7 +32,7 @@
     background: #F6EFE1;
     color: #26261F;
     line-height: 1.75;
-    padding: 24px 16px 60px;
+    padding: 70px 16px 60px;
   }
   .container {
     max-width: 720px;
@@ -82,10 +103,57 @@
     text-align: center;
   }
   strong { color: #26261F; }
+  [hidden] { display: none !important; }
+  html[data-lang="zh"] #content-en,
+  html[data-lang="en"] #content-zh { display: none !important; }
+  .language-switch {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    display: flex;
+    gap: 6px;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 2px solid #26261F;
+    border-radius: 999px;
+    box-shadow: 3px 3px 0 #E8A0C6;
+    backdrop-filter: blur(8px);
+  }
+  .language-switch button {
+    appearance: none;
+    border: 0;
+    border-radius: 999px;
+    padding: 6px 12px;
+    background: transparent;
+    color: #26261F;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .language-switch button[aria-pressed="true"] {
+    background: #62C9C4;
+    color: #FFFFFF;
+  }
+  @media (max-width: 640px) {
+    body { padding: 64px 10px 36px; }
+    .container { padding: 28px 18px; border-width: 2px; box-shadow: 4px 4px 0 #E8A0C6; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 17px; }
+    table { display: block; overflow-x: auto; }
+    .language-switch { top: 10px; right: 10px; }
+  }
 </style>
 </head>
 <body>
-<div class="container">
+<nav class="language-switch" aria-label="Language / 语言">
+  <button type="button" data-set-lang="zh" aria-pressed="true">中文</button>
+  <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+</nav>
+
+<main class="container">
+<article id="content-zh" class="content" lang="zh-CN">
   <h1>像素豆匣 · 隐私政策</h1>
   <div class="meta">更新日期：2026年9月1日　|　适用版本：像素豆匣 App（iOS）</div>
 
@@ -143,6 +211,144 @@
   </div>
 
   <div class="footer">像素豆匣 · 像素豆匣隐私政策 · 联系方式：beadplix@163.com</div>
-</div>
+</article>
+
+<article id="content-en" class="content" lang="en" hidden>
+  <h1>PixelBean Privacy Policy</h1>
+  <div class="meta">Last updated: September 1, 2026　|　Applies to: PixelBean App (iOS)</div>
+
+  <p>PixelBean is a tool that turns photos into bead patterns. We understand the importance of privacy. This policy explains how we handle your information when you use the app.</p>
+
+  <h2>1. Information Collection</h2>
+  <p>PixelBean <strong>does not collect, upload, or store any of your personal information</strong>. All patterns, imported images, bead plans, and related data are <strong>stored only in local storage on your device</strong>. The app has no server backend, and we cannot access your data.</p>
+
+  <h2>2. Data Storage and Deletion</h2>
+  <ul>
+    <li>All patterns, images, and plans are stored only on your device.</li>
+    <li>You can delete any pattern or image in the app at any time.</li>
+    <li>Uninstalling the app deletes all local data.</li>
+  </ul>
+
+  <h2>3. Permissions</h2>
+  <table>
+    <tr><th>Permission</th><th>Purpose</th><th>Details</th></tr>
+    <tr><td>Photo Library / Photos</td><td>Import images for creating patterns and save exported patterns</td><td>Accessed only when you actively select an image; the app does not scan or upload your library automatically</td></tr>
+    <tr><td>Camera</td><td>Take a photo to create a pattern</td><td>Used only when you actively take a photo</td></tr>
+  </table>
+  <p>We <strong>do not use</strong> the advertising identifier (IDFA), ad tracking, network analytics, statistics, or third-party SDKs.</p>
+
+  <h2>4. Membership and In-App Purchases</h2>
+  <p>PixelBean offers the following virtual items. Purchases are completed through the Apple App Store, and Apple handles payment information. The app does not access or store any payment data:</p>
+  <table>
+    <tr><th>Item</th><th>Price</th><th>Description</th></tr>
+    <tr><td>Monthly Membership</td><td>Price shown in the App Store</td><td>Auto-renewable subscription</td></tr>
+    <tr><td>Yearly Membership</td><td>Price shown in the App Store</td><td>Auto-renewable subscription</td></tr>
+    <tr><td>Lifetime Membership</td><td>Price shown in the App Store</td><td>One-time, non-consumable purchase</td></tr>
+  </table>
+  <div class="highlight">
+    <p><strong>Auto-Renewable Subscriptions (Monthly / Yearly):</strong></p>
+    <ul>
+      <li>The subscription automatically renews before the end of each period for the same term as the selected plan.</li>
+      <li>New monthly subscribers are eligible for a <strong>3-day free trial</strong>.</li>
+      <li>To cancel, turn off auto-renewal in <strong>Settings → Apple ID → Subscriptions</strong> at least 24 hours before the current period ends.</li>
+      <li>Canceling during the free trial prevents charges. If you do not cancel before the trial ends, the paid subscription starts automatically.</li>
+    </ul>
+  </div>
+
+  <h2>5. Third-Party Services</h2>
+  <p>Other than the Apple App Store for in-app purchases and subscription management, the app <strong>does not integrate any third-party analytics, advertising, social media, or data collection services</strong>. All functionality works offline.</p>
+
+  <h2>6. Children's Privacy</h2>
+  <p>The app is a general-purpose utility. It does not direct collection toward children and does not collect any personal data, including children's information. If your child uses the app, we recommend supervising their use.</p>
+
+  <h2>7. Policy Updates</h2>
+  <p>We may update this Privacy Policy from time to time. When we do, we will publish the latest version on this page and update the “Last updated” date. We will provide notice of material changes as appropriate.</p>
+
+  <h2>8. Contact Us</h2>
+  <div class="contact">
+    <p>If you have any questions about this Privacy Policy, subscriptions, or data-related matters, please contact us:</p>
+    <p><strong>Email: beadplix@163.com</strong></p>
+  </div>
+
+  <div class="footer">PixelBean · Privacy Policy · Contact: beadplix@163.com</div>
+</article>
+</main>
+
+<script>
+(function () {
+  var zh = document.getElementById('content-zh');
+  var en = document.getElementById('content-en');
+  var buttons = document.querySelectorAll('[data-set-lang]');
+  var languageKey = 'pixelbean-privacy-language';
+
+  function normalizeLang(value) {
+    return value && value.toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+  }
+
+  function getUrlLang() {
+    try {
+      return new URLSearchParams(window.location.search).get('lang');
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function getSavedLang() {
+    try {
+      return window.localStorage.getItem(languageKey);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function setSavedLang(lang) {
+    try {
+      window.localStorage.setItem(languageKey, lang);
+    } catch (error) {
+      // Storage can be unavailable in private browsing; language switching still works.
+    }
+  }
+
+  function detectLang() {
+    var queryLang = getUrlLang();
+    if (queryLang) return normalizeLang(queryLang);
+
+    var savedLang = getSavedLang();
+    if (savedLang) return normalizeLang(savedLang);
+
+    return normalizeLang(navigator.language || (navigator.languages && navigator.languages[0]) || 'en');
+  }
+
+  function applyLang(lang, updateUrl) {
+    var isZh = lang === 'zh';
+
+    zh.hidden = !isZh;
+    en.hidden = isZh;
+    document.documentElement.lang = isZh ? 'zh-CN' : 'en';
+    document.documentElement.setAttribute('data-lang', lang);
+    document.title = isZh ? '像素豆匣 · 隐私政策' : 'PixelBean Privacy Policy';
+
+    buttons.forEach(function (button) {
+      button.setAttribute('aria-pressed', String(button.dataset.setLang === lang));
+    });
+
+    setSavedLang(lang);
+
+    if (updateUrl) {
+      var url = new URL(window.location.href);
+      url.searchParams.set('lang', lang);
+      window.history.replaceState(null, '', url.toString());
+    }
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      applyLang(button.dataset.setLang, true);
+    });
+  });
+
+  applyLang(detectLang(), false);
+})();
+</script>
 </body>
 </html>
