@@ -7,23 +7,32 @@
 <meta name="description" content="PixelBean Privacy Policy / 像素豆匣隐私政策">
 <script>
 (function () {
+  function normalize(value) {
+    var v = String(value || '').toLowerCase();
+    if (v.indexOf('zh') === 0) return 'zh';
+    if (v.indexOf('ja') === 0) return 'ja';
+    if (v.indexOf('ko') === 0) return 'ko';
+    if (v.indexOf('en') === 0) return 'en';
+    return null;
+  }
   var lang = 'zh';
   try {
     var queryLang = new URLSearchParams(window.location.search).get('lang');
     var savedLang = window.localStorage.getItem('pixelbean-privacy-language');
     var browserLang = navigator.language || (navigator.languages && navigator.languages[0]) || 'en';
-    var value = queryLang || savedLang || browserLang;
-    lang = value && value.toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    lang = normalize(queryLang) || normalize(savedLang) || normalize(browserLang) || 'en';
   } catch (error) {
-    lang = (navigator.language && navigator.language.toLowerCase().indexOf('zh') === 0) ? 'zh' : 'en';
+    lang = normalize(navigator.language) || 'en';
   }
   document.documentElement.setAttribute('data-lang', lang);
-  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
 })();
 </script>
 <link rel="canonical" href="https://DD9579.github.io/perler-beads-privacy/private.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://DD9579.github.io/perler-beads-privacy/private.html?lang=zh">
 <link rel="alternate" hreflang="en" href="https://DD9579.github.io/perler-beads-privacy/private.html?lang=en">
+<link rel="alternate" hreflang="ja" href="https://DD9579.github.io/perler-beads-privacy/private.html?lang=ja">
+<link rel="alternate" hreflang="ko" href="https://DD9579.github.io/perler-beads-privacy/private.html?lang=ko">
 <link rel="alternate" hreflang="x-default" href="https://DD9579.github.io/perler-beads-privacy/private.html">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -106,6 +115,11 @@
   [hidden] { display: none !important; }
   html[data-lang="zh"] #content-en,
   html[data-lang="en"] #content-zh { display: none !important; }
+  .content { display: none !important; }
+  html[data-lang="zh"] #content-zh,
+  html[data-lang="en"] #content-en,
+  html[data-lang="ja"] #content-ja,
+  html[data-lang="ko"] #content-ko { display: block !important; }
   .language-switch {
     position: fixed;
     top: 16px;
@@ -150,6 +164,8 @@
 <nav class="language-switch" aria-label="Language / 语言">
   <button type="button" data-set-lang="zh" aria-pressed="true">中文</button>
   <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+  <button type="button" data-set-lang="ja" aria-pressed="false">日本語</button>
+  <button type="button" data-set-lang="ko" aria-pressed="false">한국어</button>
 </nav>
 
 <main class="container">
@@ -272,81 +288,134 @@
 
   <div class="footer">PixelBean · Privacy Policy · Contact: beadplix@163.com</div>
 </article>
+<article id="content-ja" class="content" lang="ja">
+  <h1>ピクセルビーズボックス · プライバシーポリシー</h1>
+  <div class="meta">最終更新日：2026年9月1日　|　対象：ピクセルビーズボックス App（iOS）</div>
+  <p>ピクセルビーズボックスは、写真をビーズ図案に変換するツールです。お客様のプライバシーを重視し、本ポリシーでは本アプリ利用時の情報の取り扱いについて説明します。</p>
+  <h2>1. 情報の収集</h2>
+  <p>本アプリは、お客様の個人情報を<strong>収集、アップロード、保存しません</strong>。作成した図案、読み込んだ画像、ビーズプランなどのデータは<strong>お客様の端末内にのみ保存されます</strong>。本アプリにはサーバーバックエンドがなく、当社がこれらのデータにアクセスすることはできません。</p>
+  <h2>2. データの保存と削除</h2>
+  <ul>
+    <li>図案、画像、プランはすべて端末内に保存されます。</li>
+    <li>図案や画像はアプリ内でいつでも削除できます。</li>
+    <li>アプリをアンインストールすると、端末内のデータも削除されます。</li>
+  </ul>
+  <h2>3. 権限</h2>
+  <table>
+    <tr><th>権限</th><th>目的</th><th>詳細</th></tr>
+    <tr><td>写真ライブラリ / 写真</td><td>図案作成用の画像読み込み、書き出した図案の保存</td><td>お客様が画像を選択したときのみアクセスします。写真ライブラリを自動でスキャンまたはアップロードすることはありません。</td></tr>
+    <tr><td>カメラ</td><td>図案作成用の写真撮影</td><td>お客様が撮影操作を行ったときのみ使用します。</td></tr>
+  </table>
+  <p>広告識別子（IDFA）、広告トラッキング、ネットワーク解析、統計、第三者SDKは<strong>使用しません</strong>。</p>
+  <h2>4. メンバーシップとアプリ内購入</h2>
+  <p>本アプリは以下の仮想アイテムを提供します。購入は Apple App Store を通じて行われ、支払い情報は Apple が処理します。本アプリが支払い情報にアクセスしたり保存したりすることはありません。</p>
+  <table>
+    <tr><th>項目</th><th>価格</th><th>説明</th></tr>
+    <tr><td>月額メンバーシップ</td><td>App Store に表示される価格</td><td>自動更新サブスクリプション</td></tr>
+    <tr><td>年額メンバーシップ</td><td>App Store に表示される価格</td><td>自動更新サブスクリプション</td></tr>
+    <tr><td>買い切りメンバーシップ</td><td>App Store に表示される価格</td><td>買い切り型の非消耗型購入</td></tr>
+  </table>
+  <div class="highlight"><p><strong>自動更新サブスクリプション（月額 / 年額）：</strong></p><ul><li>サブスクリプションは、現在の期間終了前に同じ期間で自動更新されます。</li><li>対象の新規月額購読者は<strong>3日間無料トライアル</strong>を利用できます。</li><li>解約するには、現在の期間終了の24時間前までに<strong>設定 → Apple ID → サブスクリプション</strong>で自動更新をオフにしてください。</li><li>無料トライアル中に解約すれば料金は発生しません。トライアル終了前に解約しない場合、有料サブスクリプションが自動的に開始されます。</li></ul></div>
+  <h2>5. 第三者サービス</h2>
+  <p>アプリ内購入とサブスクリプション管理のための Apple App Store を除き、本アプリは第三者による解析、広告、ソーシャルメディア、データ収集サービスを<strong>一切組み込んでいません</strong>。すべての機能はオフラインで動作します。</p>
+  <h2>6. 子どものプライバシー</h2>
+  <p>本アプリは一般向けのユーティリティです。子どもから個人情報を収集することはなく、子どもの情報を含む個人データを収集しません。お子様が使用する場合は、保護者の監督をおすすめします。</p>
+  <h2>7. ポリシーの更新</h2>
+  <p>本プライバシーポリシーは必要に応じて更新されることがあります。更新時は最新版をこのページに掲載し、「最終更新日」を変更します。重要な変更がある場合は適切にお知らせします。</p>
+  <h2>8. お問い合わせ</h2>
+  <div class="contact"><p>本プライバシーポリシー、サブスクリプション、データの取り扱いについてご質問がある場合は、以下までお問い合わせください。</p><p><strong>Email: beadplix@163.com</strong></p></div>
+  <div class="footer">ピクセルビーズボックス · プライバシーポリシー · お問い合わせ: beadplix@163.com</div>
+</article>
+<article id="content-ko" class="content" lang="ko">
+  <h1>픽셀 비즈 박스 · 개인정보 처리방침</h1>
+  <div class="meta">최종 업데이트: 2026년 9월 1일　|　대상: 픽셀 비즈 박스 App(iOS)</div>
+  <p>픽셀 비즈 박스는 사진을 비즈 도안으로 변환하는 도구입니다. 사용자의 개인정보를 중요하게 생각하며, 본 방침은 앱 이용 시 정보가 어떻게 처리되는지 설명합니다.</p>
+  <h2>1. 정보 수집</h2>
+  <p>본 앱은 사용자의 개인정보를 <strong>수집, 업로드 또는 저장하지 않습니다</strong>. 생성한 도안, 가져온 이미지, 비즈 계획 등 모든 데이터는 <strong>사용자의 기기에만 저장됩니다</strong>. 본 앱에는 서버 백엔드가 없으며 당사는 해당 데이터에 접근할 수 없습니다.</p>
+  <h2>2. 데이터 저장 및 삭제</h2>
+  <ul><li>도안, 이미지, 계획은 모두 기기에만 저장됩니다.</li><li>도안과 이미지는 앱에서 언제든지 삭제할 수 있습니다.</li><li>앱을 삭제하면 기기에 저장된 모든 데이터가 삭제됩니다.</li></ul>
+  <h2>3. 권한</h2>
+  <table><tr><th>권한</th><th>목적</th><th>세부 정보</th></tr><tr><td>사진 보관함 / 사진</td><td>도안 생성을 위한 이미지 가져오기 및 내보낸 도안 저장</td><td>사용자가 이미지를 직접 선택할 때만 접근합니다. 사진 보관함을 자동으로 검사하거나 업로드하지 않습니다.</td></tr><tr><td>카메라</td><td>도안 생성을 위한 사진 촬영</td><td>사용자가 직접 촬영할 때만 사용합니다.</td></tr></table>
+  <p>광고 식별자(IDFA), 광고 추적, 네트워크 분석, 통계 또는 제3자 SDK를 <strong>사용하지 않습니다</strong>.</p>
+  <h2>4. 멤버십 및 인앱 구매</h2>
+  <p>본 앱은 다음 가상 항목을 제공합니다. 구매는 Apple App Store를 통해 처리되며 결제 정보는 Apple이 관리합니다. 본 앱은 결제 데이터에 접근하거나 저장하지 않습니다.</p>
+  <table><tr><th>항목</th><th>가격</th><th>설명</th></tr><tr><td>월간 멤버십</td><td>App Store에 표시된 가격</td><td>자동 갱신 구독</td></tr><tr><td>연간 멤버십</td><td>App Store에 표시된 가격</td><td>자동 갱신 구독</td></tr><tr><td>평생 멤버십</td><td>App Store에 표시된 가격</td><td>일회성 비소모품 구매</td></tr></table>
+  <div class="highlight"><p><strong>자동 갱신 구독(월간 / 연간):</strong></p><ul><li>구독은 현재 기간이 끝나기 전에 동일한 기간으로 자동 갱신됩니다.</li><li>대상 신규 월간 구독자는 <strong>3일 무료 체험</strong>을 이용할 수 있습니다.</li><li>취소하려면 현재 기간 종료 24시간 전까지 <strong>설정 → Apple ID → 구독</strong>에서 자동 갱신을 끄십시오.</li><li>무료 체험 중 취소하면 요금이 청구되지 않습니다. 체험 종료 전에 취소하지 않으면 유료 구독이 자동으로 시작됩니다.</li></ul></div>
+  <h2>5. 제3자 서비스</h2>
+  <p>인앱 구매와 구독 관리를 위한 Apple App Store 외에 본 앱은 제3자 분석, 광고, 소셜 미디어 또는 데이터 수집 서비스를 <strong>통합하지 않습니다</strong>. 모든 기능은 오프라인으로 작동합니다.</p>
+  <h2>6. 아동 개인정보</h2>
+  <p>본 앱은 일반 사용자를 위한 도구입니다. 아동을 대상으로 개인정보를 수집하지 않으며 아동의 정보를 포함한 개인 데이터를 수집하지 않습니다. 아동이 사용하는 경우 보호자의 지도를 권장합니다.</p>
+  <h2>7. 방침 업데이트</h2>
+  <p>본 개인정보 처리방침은 필요에 따라 업데이트될 수 있습니다. 업데이트 시 최신 버전을 이 페이지에 게시하고 ‘최종 업데이트’ 날짜를 변경합니다. 중요한 변경 사항이 있는 경우 적절히 안내합니다.</p>
+  <h2>8. 문의</h2>
+  <div class="contact"><p>본 개인정보 처리방침, 구독 또는 데이터 처리와 관련하여 문의 사항이 있으면 아래로 연락해 주십시오.</p><p><strong>Email: beadplix@163.com</strong></p></div>
+  <div class="footer">픽셀 비즈 박스 · 개인정보 처리방침 · 문의: beadplix@163.com</div>
+</article>
 </main>
 
 <script>
 (function () {
-  var zh = document.getElementById('content-zh');
-  var en = document.getElementById('content-en');
+  var content = {
+    zh: document.getElementById('content-zh'),
+    en: document.getElementById('content-en'),
+    ja: document.getElementById('content-ja'),
+    ko: document.getElementById('content-ko')
+  };
   var buttons = document.querySelectorAll('[data-set-lang]');
   var languageKey = 'pixelbean-privacy-language';
-
+  var titles = {
+    zh: '像素豆匣 · 隐私政策',
+    en: 'PixelBean Privacy Policy',
+    ja: 'ピクセルビーズボックス · プライバシーポリシー',
+    ko: '픽셀 비즈 박스 · 개인정보 처리방침'
+  };
   function normalizeLang(value) {
-    return value && value.toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    var v = String(value || '').toLowerCase();
+    if (v.indexOf('zh') === 0) return 'zh';
+    if (v.indexOf('ja') === 0) return 'ja';
+    if (v.indexOf('ko') === 0) return 'ko';
+    if (v.indexOf('en') === 0) return 'en';
+    return null;
   }
-
   function getUrlLang() {
-    try {
-      return new URLSearchParams(window.location.search).get('lang');
-    } catch (error) {
-      return null;
-    }
+    try { return new URLSearchParams(window.location.search).get('lang'); } catch (error) { return null; }
   }
-
   function getSavedLang() {
-    try {
-      return window.localStorage.getItem(languageKey);
-    } catch (error) {
-      return null;
-    }
+    try { return window.localStorage.getItem(languageKey); } catch (error) { return null; }
   }
-
   function setSavedLang(lang) {
-    try {
-      window.localStorage.setItem(languageKey, lang);
-    } catch (error) {
-      // Storage can be unavailable in private browsing; language switching still works.
-    }
+    try { window.localStorage.setItem(languageKey, lang); } catch (error) {}
   }
-
   function detectLang() {
-    var queryLang = getUrlLang();
-    if (queryLang) return normalizeLang(queryLang);
-
-    var savedLang = getSavedLang();
-    if (savedLang) return normalizeLang(savedLang);
-
-    return normalizeLang(navigator.language || (navigator.languages && navigator.languages[0]) || 'en');
+    var queryLang = normalizeLang(getUrlLang());
+    if (queryLang) return queryLang;
+    var savedLang = normalizeLang(getSavedLang());
+    if (savedLang) return savedLang;
+    return normalizeLang(navigator.language || (navigator.languages && navigator.languages[0]) || 'en') || 'en';
   }
-
   function applyLang(lang, updateUrl) {
-    var isZh = lang === 'zh';
-
-    zh.hidden = !isZh;
-    en.hidden = isZh;
-    document.documentElement.lang = isZh ? 'zh-CN' : 'en';
+    lang = normalizeLang(lang) || 'en';
+    Object.keys(content).forEach(function (key) {
+      content[key].hidden = key !== lang;
+    });
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
     document.documentElement.setAttribute('data-lang', lang);
-    document.title = isZh ? '像素豆匣 · 隐私政策' : 'PixelBean Privacy Policy';
-
+    document.title = titles[lang] || titles.en;
     buttons.forEach(function (button) {
       button.setAttribute('aria-pressed', String(button.dataset.setLang === lang));
     });
-
     setSavedLang(lang);
-
     if (updateUrl) {
       var url = new URL(window.location.href);
       url.searchParams.set('lang', lang);
       window.history.replaceState(null, '', url.toString());
     }
   }
-
   buttons.forEach(function (button) {
     button.addEventListener('click', function () {
       applyLang(button.dataset.setLang, true);
     });
   });
-
   applyLang(detectLang(), false);
 })();
 </script>
